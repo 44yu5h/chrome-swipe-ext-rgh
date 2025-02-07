@@ -1,0 +1,22 @@
+.browser-extension-swipe-back-arrow {
+  --size: 72px;
+  position: fixed;
+  top: calc(50vh - var(--size) / 2);
+  width: var(--size);
+  height: var(--size);
+  z-index: 100;
+}
+
+.browser-extension-swipe-back-arrow-left {
+  left: -100px;
+}
+
+.browser-extension-swipe-back-arrow-right {
+  right: -100px;
+  transform: rotate(180deg);
+}
+
+.browser-extension-swipe-back-arrow.transition {
+  transition: opacity 500ms;
+  opacity: 0;
+}
