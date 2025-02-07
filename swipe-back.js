@@ -72,7 +72,7 @@ const historyBack = debounce(function back() {
 }, 200);
 
 const historyForward = debounce(function historyForward() {
-    // window.history.forward();
+    window.history.forward();
   console.log("forward");
   console.log(window.history.length);
   console.log("-----------------");
@@ -123,14 +123,14 @@ function handleWheel(event) {
   }
   if (position < -150 * postitionScale) {
     console.log("position < -150 * postitionScale");
-    postitionScale = -150 * postitionScale;
+    position = -150 * postitionScale;
   }
 
   if (position > 0) {
-    console.log("ani  mateArrow");
+    console.log("animateLeftArrow, pos:", position);
     animateArrow(leftArrow);
   } else {
-    console.log("animateArrow");
+    console.log("animateRightArrow, pos:", position);
     animateArrow(rightArrow);
   }
 
@@ -145,9 +145,13 @@ function handleWheel(event) {
     historyBack();
     } else {
     console.log("forward");
-    // historyForward();
+    historyForward();
     }
     position = 0;
+  }
+  else {
+    console.log("nothing:", position);
+    console.log("postitionScale:", postitionScale);
   }
 }
 
