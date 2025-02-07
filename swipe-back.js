@@ -54,9 +54,7 @@ const imageInitialLeft = -110;
 function debounce(fn, duration) {
   let expiresAt = 0;
   return function debouncedFn() {
-    console.log("debouncedFn");
     if (Date.now() < expiresAt) {
-    console.log("Date.now() < expiresAt");
     return;
     }
     expiresAt = Date.now() + duration;
@@ -66,16 +64,10 @@ function debounce(fn, duration) {
 
 const historyBack = debounce(function back() {
   window.history.back();
-  console.log("back");
-  console.log(window.history.length);
-  console.log("-----------------");
 }, 200);
 
 const historyForward = debounce(function historyForward() {
     window.history.forward();
-  console.log("forward");
-  console.log(window.history.length);
-  console.log("-----------------");
 }, 200);
 
 function resetPosition() {
@@ -109,28 +101,22 @@ function animateArrow(arrowElement) {
 function handleWheel(event) {
   if (event.deltaY !== 0) {
     freezeUntil = Date.now() + 50;
-    console.log("freezeUntil = Date.now() + 50;");
     return;
   }
   if (Date.now() < freezeUntil) {
-    console.log(Date.now(), freezeUntil);
     return;
   }
   position -= event.deltaX;
   if (position > 150 * postitionScale) {
-    console.log("position > 150 * postitionScale");
     position = 150 * postitionScale;
   }
   if (position < -150 * postitionScale) {
-    console.log("position < -150 * postitionScale");
     position = -150 * postitionScale;
   }
 
   if (position > 0) {
-    console.log("animateLeftArrow, pos:", position);
     animateArrow(leftArrow);
   } else {
-    console.log("animateRightArrow, pos:", position);
     animateArrow(rightArrow);
   }
 
@@ -138,20 +124,13 @@ function handleWheel(event) {
   resetTimeoutID = window.setTimeout(resetPosition, fadeDelay);
 
   if (position >= 130 * postitionScale || position <= -130 * postitionScale) {
-    console.log("position");
     freezeUntil = Date.now() + 500;
     if (position > 0) {
-    console.log("back");
     historyBack();
     } else {
-    console.log("forward");
     historyForward();
     }
     position = 0;
-  }
-  else {
-    console.log("nothing:", position);
-    console.log("postitionScale:", postitionScale);
   }
 }
 
@@ -160,7 +139,6 @@ function handleScroll(event) {
   const scrollX = event.target.scrollX ?? event.target.scrollLeft;
   // only handles horizontal scroll
   if (scrollX !== lastScrollX) {
-    console.log("scrollx !==");
     position = 0;
     freezeUntil = Date.now() + 1000;
   }
@@ -170,7 +148,6 @@ function handleScroll(event) {
 function main() {
   // @ts-ignore
   if (/Mac/.test(window.navigator.platform)) {
-    console.log("mac");
     return;
   }
   document.body.appendChild(container);
