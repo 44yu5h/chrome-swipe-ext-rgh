@@ -49,6 +49,9 @@ let fadeDelay = 500;
 let resetTimeoutID = 0;
 let transitionTimeoutID = 0;
 
+let animationMaxDistance = 200;
+let activationDistance = 140;
+
 const imageInitialLeft = -110;
 
 function debounce(fn, duration) {
@@ -82,12 +85,12 @@ function animateArrow(arrowElement) {
   if (arrow === leftArrow) {
     arrow.style.left = `${
       imageInitialLeft +
-      Math.min(position, 120 * postitionScale) / postitionScale
+      Math.min(position, animationMaxDistance * postitionScale) / postitionScale
     }px`;
   } else {
     arrow.style.right = `${
       imageInitialLeft +
-      Math.min(-position, 120 * postitionScale) / postitionScale
+      Math.min(-position, animationMaxDistance * postitionScale) / postitionScale
     }px`;
   }
 
@@ -120,10 +123,7 @@ function handleWheel(event) {
     animateArrow(rightArrow);
   }
 
-  window.clearTimeout(resetTimeoutID);
-  resetTimeoutID = window.setTimeout(resetPosition, fadeDelay);
-
-  if (position >= 130 * postitionScale || position <= -130 * postitionScale) {
+  if (position >= activationDistance * postitionScale || position <= -activationDistance * postitionScale) {
     freezeUntil = Date.now() + 500;
     if (position > 0) {
     historyBack();
