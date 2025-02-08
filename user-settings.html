@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Settings</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: "Roboto", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background: #f4f7f8;
+            color: #000;
+        }
+        
+        /* Material Card */
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin: 15px 0;
+        }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: black;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle:before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+        }
+        input[type="checkbox"]:checked + .toggle {
+            background: #00a9a5; /* Pale Cyan */
+        }
+        input[type="checkbox"]:checked + .toggle:before {
+            transform: translateX(20px);
+        }
+
+        /* Icon Grid */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+            padding: 15px; /* Added padding on both sides */
+            border-radius: 10px;
+            background: #e0f7fa; /* Light Cyan */
+            box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+            justify-content: center; /* Ensures centering */
+            align-items: center;
+        }
+
+        /* Icon Item */
+        .icon-item {
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 1);
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .icon-item img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .icon-item:hover {
+            background: rgba(0, 0, 0, 0.15);
+            transform: scale(1.1);
+        }
+        .icon-item.selected {
+            background: #e0f7fa;
+            box-shadow: 0px 0px 10px rgba(0, 169, 165, 0.8);
+        }
+
+        /* Show More/Less Button */
+        .show-more {
+            margin-top: 15px;
+            padding: 8px 14px;
+            background: black;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .show-more:hover {
+            background: #e0f7fa;
+            color: #000000;
+            /* transform: scale(1.05); */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Extension Settings</h2>
+
+        <!-- Toggle Switch -->
+        <div class="toggle-container">
+            <span>Enable Feature</span>
+            <label>
+                <input type="checkbox" id="enableFeature" hidden>
+                <div class="toggle"></div>
+            </label>
+        </div>
+
+        <!-- Icon Selection -->
+        <h3>Select an Icon</h3>
+        <div class="icon-grid" id="iconGrid"></div>
+        <div class="show-more" id="showMore">Show More</div>
+    </div>
+
+    <script src="user-settings.js"></script>
+</body>
+</html>

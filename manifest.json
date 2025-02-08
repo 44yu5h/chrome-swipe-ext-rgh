@@ -3,6 +3,13 @@
   "name": "chrome-swipe-navigation",
   "version": "2.0.3",
   "description": "Go back to previous page by swiping left with two fingers on a trackpad.",
+  "options_page": "user-settings.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "arrowStyles/icon-styles.json", "arrowStyles/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "16": "icons/16.png",
     "32": "icons/32.png",
@@ -16,5 +23,12 @@
       "js": ["swipe-back.js"],
       "css": ["swipe-back.css"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage"
+]
+
 }

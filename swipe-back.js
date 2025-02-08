@@ -1,55 +1,35 @@
-const IMAGE_LEFT_ARROW = [
-  "data:image/svg+xml;base64,",
-  "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/",
-  "Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAu",
-  "MCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAg",
-  "QnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXll",
-  "cl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHht",
-  "bG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4",
-  "PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDQ3My42NTQgNDcz",
-  "LjY1NCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDcz",
-  "LjY1NCA0NzMuNjU0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8Y2ly",
-  "Y2xlIHN0eWxlPSJmaWxsOiM0QUJDOTY7IiBjeD0iMjM2LjgyNyIgY3k9",
-  "IjIzNi44MjciIHI9IjIzNi44MjciLz4NCjxwYXRoIHN0eWxlPSJmaWxs",
-  "OiNGRkZGRkY7IiBkPSJNMzM4LjQ2NSwyMDcuOTY5Yy00My40ODcsMC04",
-  "Ni45NzUsMC0xMzAuNDU5LDBjMTEuMDgtMTEuMDgsMjIuMTYxLTIyLjE2",
-  "MSwzMy4yNDEtMzMuMjQ1DQoJYzI1LjU2LTI1LjU2LTE0LjI1OS02NS4w",
-  "ODQtMzkuODgzLTM5LjQ1NmMtMjcuMDExLDI3LjAxMS01NC4wMTgsNTQu",
-  "MDIyLTgxLjAyOSw4MS4wMzNjLTEwLjg0MSwxMC44NDEtMTAuNTQ5LDI4",
-  "LjkwNywwLjIxMywzOS42NjkNCgljMjcuMDExLDI3LjAwNyw1NC4wMTgs",
-  "NTQuMDE4LDgxLjAyOSw4MS4wMjVjMjUuNTYsMjUuNTYsNjUuMDg0LTE0",
-  "LjI1OSwzOS40NTYtMzkuODgzYy0xMS4wMTMtMTEuMDEzLTIyLjAyNi0y",
-  "Mi4wMjYtMzMuMDM5LTMzLjAzNQ0KCWM0My4zNTcsMCw4Ni43MTMsMCwx",
-  "MzAuMDY2LDBDMzc0LjI4MywyNjQuMDc3LDM3NC42MDQsMjA3Ljk2OSwz",
-  "MzguNDY1LDIwNy45Njl6Ii8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0K",
-  "PGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+",
-  "DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwv",
-  "Zz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0K",
-  "PC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==",
-].join("");
 
 const container = document.createElement("div");
 container.className = "browser-extension-swipe-back-container";
 
 const leftArrow = document.createElement("img");
 leftArrow.className = "browser-extension-swipe-back-arrow browser-extension-swipe-back-arrow-left";
-leftArrow.src = IMAGE_LEFT_ARROW;
-
 const rightArrow = document.createElement("img");
 rightArrow.className = "browser-extension-swipe-back-arrow browser-extension-swipe-back-arrow-right";
-rightArrow.src = IMAGE_LEFT_ARROW;
 
-container.appendChild(leftArrow);
-container.appendChild(rightArrow);
+chrome.storage.sync.get(["selectedIcon"], function (data) {
+  const selectedIcon = data.selectedIcon ?? "4.svg";
+  leftArrow.src = chrome.runtime.getURL(`arrowStyles/${selectedIcon}`);
+  rightArrow.src = leftArrow.src;
+});
 
-let positionScale = 6;
+document.body.appendChild(leftArrow);
+document.body.appendChild(rightArrow);
+
+let positionScale = 13;
 let position = 0;
 let freezeUntil = 0;
-let fadeDelay = 500;
+let fadeDelay = 750;
 let resetTimeoutID = 0;
 let transitionTimeoutID = 0;
 
-let animationMaxDistance = 200;
+let arrowSize = 60;
+const arrows = document.querySelectorAll('.browser-extension-swipe-back-arrow');
+arrows.forEach(arrow => {
+  arrow.style.setProperty('--size', arrowSize + 'px');
+});
+
+let animationMaxDistance = 160;
 let activationDistance = 140;
 
 const imageInitialLeft = -110;
@@ -155,4 +135,8 @@ function main() {
   document.addEventListener("scroll", handleScroll, { capture: true });
 }
 
-main();
+chrome.storage.sync.get(["enableFeature"], function (data) {
+  if (!data.enableFeature) {
+    return;
+  }
+main();});

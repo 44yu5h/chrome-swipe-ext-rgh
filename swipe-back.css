@@ -1,10 +1,11 @@
 .browser-extension-swipe-back-arrow {
-  --size: 72px;
+  --size: 60px;
   position: fixed;
   top: calc(50vh - var(--size) / 2);
   width: var(--size);
   height: var(--size);
   z-index: 100;
+  transition: transform 300ms;
 }
 
 .browser-extension-swipe-back-arrow-left {
@@ -19,4 +20,8 @@
 .browser-extension-swipe-back-arrow.transition {
   transition: opacity 500ms;
   opacity: 0;
+}
+
+.picker {
+  border-radius: 50px;
 }
