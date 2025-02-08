@@ -42,7 +42,7 @@ rightArrow.src = IMAGE_LEFT_ARROW;
 container.appendChild(leftArrow);
 container.appendChild(rightArrow);
 
-let postitionScale = 6;
+let positionScale = 6;
 let position = 0;
 let freezeUntil = 0;
 let fadeDelay = 500;
@@ -85,12 +85,12 @@ function animateArrow(arrowElement) {
   if (arrow === leftArrow) {
     arrow.style.left = `${
       imageInitialLeft +
-      Math.min(position, animationMaxDistance * postitionScale) / postitionScale
+      Math.min(position, animationMaxDistance * positionScale) / positionScale
     }px`;
   } else {
     arrow.style.right = `${
       imageInitialLeft +
-      Math.min(-position, animationMaxDistance * postitionScale) / postitionScale
+      Math.min(-position, animationMaxDistance * positionScale) / positionScale
     }px`;
   }
 
@@ -110,11 +110,11 @@ function handleWheel(event) {
     return;
   }
   position -= event.deltaX;
-  if (position > 150 * postitionScale) {
-    position = 150 * postitionScale;
+  if (position > 150 * positionScale) {
+    position = 150 * positionScale;
   }
-  if (position < -150 * postitionScale) {
-    position = -150 * postitionScale;
+  if (position < -150 * positionScale) {
+    position = -150 * positionScale;
   }
 
   if (position > 0) {
@@ -123,7 +123,7 @@ function handleWheel(event) {
     animateArrow(rightArrow);
   }
 
-  if (position >= activationDistance * postitionScale || position <= -activationDistance * postitionScale) {
+  if (position >= activationDistance * positionScale || position <= -activationDistance * positionScale) {
     freezeUntil = Date.now() + 500;
     if (position > 0) {
     historyBack();
