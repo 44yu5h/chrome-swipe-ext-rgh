@@ -13,7 +13,7 @@
 
 .browser-extension-swipe-back-arrow-right {
   right: -100px;
-  transform: rotate(180deg);
+  transform: scaleX(-1);
 }
 
 .browser-extension-swipe-back-arrow.transition {
