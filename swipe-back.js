@@ -16,7 +16,7 @@ chrome.storage.sync.get(["selectedIcon"], function (data) {
 document.body.appendChild(leftArrow);
 document.body.appendChild(rightArrow);
 
-let positionScale = 13;
+let sensetivity = 0.04;  // TODO user-settings: make it ajdustable relative to iconTravelDistance: map 
 let position = 0;
 let freezeUntil = 0;
 let fadeDelay = 750;
@@ -28,8 +28,7 @@ let scrollTimeoutID = 0;
 let arrowSize = 60;
 document.documentElement.style.setProperty('--size', `${arrowSize}px`);
 
-let animationMaxDistance = 160;
-let activationDistance = 140;
+let iconTravelDist = 120;
 
 const imageInitialLeft = -110;
 
@@ -64,12 +63,12 @@ function animateArrow(arrowElement) {
   if (arrow === leftArrow) {
     arrow.style.left = `${
       imageInitialLeft +
-      Math.min(position, animationMaxDistance * positionScale) / positionScale
+      Math.min(position * sensetivity, iconTravelDist)
     }px`;
   } else {
     arrow.style.right = `${
       imageInitialLeft +
-      Math.min(-position, animationMaxDistance * positionScale) / positionScale
+      Math.min(-position * sensetivity, iconTravelDist)
     }px`;
   }
 
@@ -90,12 +89,6 @@ function handleWheel(event) {
     return;
   }
   position -= event.deltaX;
-  if (position > 150 * positionScale) {
-    position = 150 * positionScale;
-  }
-  if (position < -150 * positionScale) {
-    position = -150 * positionScale;
-  }
 
   if (position > 0) {
     animateArrow(leftArrow);
@@ -103,7 +96,7 @@ function handleWheel(event) {
     animateArrow(rightArrow);
   }
 
-  if (position >= activationDistance * positionScale || position <= -activationDistance * positionScale) {
+  if (position * sensetivity  >= iconTravelDist|| position * sensetivity  <= -iconTravelDist) {
     freezeUntil = Date.now() + 500;
     if (position > 0) {
     historyBack();
