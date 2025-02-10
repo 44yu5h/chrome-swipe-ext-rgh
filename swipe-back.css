@@ -1,5 +1,4 @@
 .browser-extension-swipe-back-arrow {
-  --size: 60px;
   position: fixed;
   top: calc(50vh - var(--size) / 2);
   width: var(--size);
@@ -18,7 +17,7 @@
 }
 
 .browser-extension-swipe-back-arrow.transition {
-  transition: opacity 500ms;
+  transition: opacity  var(--fade-delay);
   opacity: 0;
 }
 

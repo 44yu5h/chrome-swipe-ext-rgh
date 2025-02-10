@@ -20,14 +20,13 @@ let positionScale = 13;
 let position = 0;
 let freezeUntil = 0;
 let fadeDelay = 750;
+document.documentElement.style.setProperty('--fade-delay', `${fadeDelay}ms`);
 let resetTimeoutID = 0;
 let transitionTimeoutID = 0;
+let scrollTimeoutID = 0;
 
 let arrowSize = 60;
-const arrows = document.querySelectorAll('.browser-extension-swipe-back-arrow');
-arrows.forEach(arrow => {
-  arrow.style.setProperty('--size', arrowSize + 'px');
-});
+document.documentElement.style.setProperty('--size', `${arrowSize}px`);
 
 let animationMaxDistance = 160;
 let activationDistance = 140;
@@ -47,11 +46,11 @@ function debounce(fn, duration) {
 
 const historyBack = debounce(function back() {
   window.history.back();
-}, 200);
+}, 500);
 
 const historyForward = debounce(function historyForward() {
     window.history.forward();
-}, 200);
+}, 500);
 
 function resetPosition() {
   position = 0;
@@ -74,6 +73,7 @@ function animateArrow(arrowElement) {
     }px`;
   }
 
+  //TODO show only 1 icon at a time
   arrow.classList.remove("transition");
   window.clearTimeout(transitionTimeoutID);
   transitionTimeoutID = window.setTimeout(() => {
@@ -112,6 +112,12 @@ function handleWheel(event) {
     }
     position = 0;
   }
+  if (scrollTimeoutID) {  // bug-fix, the scroll position was never reset; better control now
+    clearTimeout(scrollTimeoutID);
+  }
+  scrollTimeoutID = setTimeout(() => {
+    resetPosition();
+  }, fadeDelay);
 }
 
 let lastScrollX = 0;
